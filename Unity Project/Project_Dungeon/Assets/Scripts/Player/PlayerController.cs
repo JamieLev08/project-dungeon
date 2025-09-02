@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,12 +16,16 @@ public class PlayerController : MonoBehaviour
     private float jump;
     private bool grounded;
     private float gravityScale = 5f;
-    private float fallingGravityScale = 15f;
+    private float fallingGravityScale = 5f;
+
+    private Animator animator;
 
     private void Awake()
     {
         playerActions = new PlayerActions();
+
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         if(rb != null)
         {
@@ -60,6 +65,19 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = fallingGravityScale;
         }
+
+        if (moveInput.x < 0)
+        {
+            transform.SetPositionAndRotation(transform.position, new Quaternion(0, 180, 0, 0));
+        }
+        else if(moveInput.x > 0)
+        {
+            transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
+        }
+
+        animator.SetFloat("VelocityX", rb.linearVelocityX);
+        animator.SetFloat("VelocityY", rb.linearVelocityY);
+        animator.SetBool("Grounded", grounded);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

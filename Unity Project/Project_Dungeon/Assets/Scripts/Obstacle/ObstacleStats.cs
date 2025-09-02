@@ -4,6 +4,7 @@ public class ObstacleStats : MonoBehaviour
 {
     public float damage;
     public float obsHealth;
+    public bool persistent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,15 +19,17 @@ public class ObstacleStats : MonoBehaviour
 
     public void Damaged()
     {
-        float tempHealth = obsHealth -= (damage * 2);
-
-        if(tempHealth <= 0)
+        if (!persistent)
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            obsHealth = tempHealth;
+            float tempHealth = obsHealth -= damage;
+            if (tempHealth <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                obsHealth = tempHealth;
+            }
         }
     }
 }

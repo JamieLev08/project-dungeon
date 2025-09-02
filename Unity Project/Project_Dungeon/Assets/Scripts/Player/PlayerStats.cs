@@ -7,14 +7,13 @@ public class PlayerStats : MonoBehaviour
     public float health;
 
     private float maxHealth;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     private void Awake()
     {
         maxHealth = health;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         
     }
