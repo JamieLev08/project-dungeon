@@ -18,11 +18,15 @@ public class PlayerController : MonoBehaviour
     private float gravityScale = 5f;
     private float fallingGravityScale = 5f;
 
+    [SerializeField]
+    private Camera_Manager camManage;
     private Animator animator;
 
     private void Awake()
     {
         playerActions = new PlayerActions();
+
+        camManage = FindFirstObjectByType<Camera_Manager>();
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -86,5 +90,10 @@ public class PlayerController : MonoBehaviour
         {
             grounded = true;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        camManage.SwitchCamera(collision);
     }
 }
